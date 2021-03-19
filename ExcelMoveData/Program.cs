@@ -60,10 +60,20 @@ namespace ExcelMoveData
 
             // headers
 
+            worksheet.Cells["B2"].Value = "A";
+            worksheet1.Cells["B14"].Copy(worksheet.Cells["C3"]);
+            worksheet1.Cells["B15"].Copy(worksheet.Cells["D3"]);
+            worksheet1.Cells["C15"].Copy(worksheet.Cells["E3"]);
+            worksheet1.Cells["D15"].Copy(worksheet.Cells["F3"]);
+            worksheet1.Cells["E15"].Copy(worksheet.Cells["G3"]);
+            worksheet1.Cells["F15"].Copy(worksheet.Cells["H3"]);
+            worksheet1.Cells["I15"].Copy(worksheet.Cells["M3"]);
+            worksheet1.Cells["J15"].Copy(worksheet.Cells["N3"]);
 
-            worksheet1.Cells["B15"].Copy(worksheet.Cells["D2"]);
+            worksheet.Column(4).Width = 60;
 
             package1.SaveAs(file1);
+
             package.SaveAs(file);
             
         }
