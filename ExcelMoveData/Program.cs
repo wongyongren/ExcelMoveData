@@ -1,5 +1,7 @@
 ﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
+using System.Drawing;
 using System.IO;
 
 namespace ExcelMoveData
@@ -9,24 +11,24 @@ namespace ExcelMoveData
         static void Main(string[] args)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            
 
 
-            CopyData();
             //CreateHead();
+            CopyData();
+            
 
 
         }
         private static void CreateHead()
         {
-            /*            var file = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\CopyExcel.xlsx");
+                       var file = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\CopyExcel.xlsx");
                         var file1 = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\8T WWT ELCP Panel Quotation @ 8T Fish Farm.xlsx");
                         using var package = new ExcelPackage(file);
                         using var package1 = new ExcelPackage(file1);
 
 
                         // Create worksheets
-                            package.Workbook.Worksheets.Add("WWT ELCP");
+                            //package.Workbook.Worksheets.Add("WWT ELCP");
                             var worksheet = package.Workbook.Worksheets["WWT ELCP"];
                             //head
                             worksheet.Cells["A1"].Value = "PhaseType";
@@ -46,7 +48,7 @@ namespace ExcelMoveData
 
                             var range = worksheet.Cells["A1:N1"];
                             range.AutoFitColumns();
-                        package.SaveAs(file);*/
+                        package.SaveAs(file);
 
         }
         private static void CopyData()
@@ -61,19 +63,39 @@ namespace ExcelMoveData
             // headers
 
             worksheet.Cells["B2"].Value = "A";
-            worksheet1.Cells["B14"].Copy(worksheet.Cells["C3"]);
-            worksheet1.Cells["B15"].Copy(worksheet.Cells["D3"]);
-            worksheet1.Cells["C15"].Copy(worksheet.Cells["E3"]);
-            worksheet1.Cells["D15"].Copy(worksheet.Cells["F3"]);
-            worksheet1.Cells["E15"].Copy(worksheet.Cells["G3"]);
-            worksheet1.Cells["F15"].Copy(worksheet.Cells["H3"]);
-            worksheet1.Cells["I15"].Copy(worksheet.Cells["M3"]);
-            worksheet1.Cells["J15"].Copy(worksheet.Cells["N3"]);
-
+            var row1 = 14;
+            for (var row = 3; row < 58 ; row++)
+            {
+                    worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
+                    worksheet.Column(row).AutoFit();
+                row1++;
+            }
             worksheet.Column(4).Width = 60;
+            worksheet.Column(3).Width = 13;
 
+            for (var row = 5;row <58; row++)
+            {
+                worksheet.Cells[$"E{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[$"F{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[$"G{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[$"H{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[$"M{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[$"N{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            }
+            for (var i = 9; i <15; i++)
+            {
+                worksheet.Column(i).Style.Font.Color.SetColor(Color.Red);
+            }
+            
+                
             package1.SaveAs(file1);
-
             package.SaveAs(file);
             
         }
