@@ -171,9 +171,10 @@ namespace ExcelMoveData
                 for (var row = 2; row < 100; row++)
                 {
                     //var text = worksheet1.Cells[$"A{row1}"].Value.ToString();
-                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column))
+                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
                     {
                         System.Console.WriteLine("New character:" + column);
+                        System.Console.WriteLine(row);
                         //package.SaveAs(file);
                     }
                     else
@@ -181,7 +182,6 @@ namespace ExcelMoveData
                         System.Console.WriteLine(worksheet1.Cells[$"A{row1}"].Value.ToString());
                         System.Console.WriteLine(column);
                         System.Console.WriteLine("Error");
-                        break;
                         break;
                     }
                 }
