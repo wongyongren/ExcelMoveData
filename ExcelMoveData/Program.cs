@@ -167,30 +167,49 @@ namespace ExcelMoveData
                         System.Console.WriteLine("New character:" + ch);*/
 
             var row1 = 14;
-            double value = Math.Round(1, 1);
+            double value = 1;
             for (char column = 'A'; column < 'Z';)
             {
-                for (var row = 2; row < 100; row++)
+                for (var row = 2; row < 50; row++)
                 {
                     //var text = worksheet1.Cells[$"A{row1}"].Value.ToString();
-                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()) || worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
+                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
                     {
                         System.Console.WriteLine("New character:" + column);
                         System.Console.WriteLine(row1);
                         //package.SaveAs(file);
                         row1++;
-                        value = value + 0.1;
+                        //value = Math.Round(value, 1) + 0.1;
                         System.Console.WriteLine(value);
+                    }
+                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
+                    {
+                        System.Console.WriteLine("New character:" + column);
+                        System.Console.WriteLine(row1);
+                        //package.SaveAs(file);
+                        row1++;
+                        value = Math.Round(value, 1) + 0.1;
+                        value = Math.Round(value, 1);
+                        System.Console.WriteLine(value);
+                    }
+                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(null))
+                    {
+                        break;
                     }
                     else
                     {
                         System.Console.WriteLine("Error");
+                        System.Console.WriteLine(worksheet1.Cells[$"A{row1}"].Value.ToString());
+                        System.Console.WriteLine(Math.Round(value, 1));
                         column++;
                         value = 1;
-                        System.Console.WriteLine(value);
+                        //System.Console.WriteLine(value);
                     }
                 }
-                break;
+                if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(null))
+                {
+                    break;
+                }
             }
         }
     }
