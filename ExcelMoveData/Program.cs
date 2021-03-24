@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using System;
 using System.Drawing;
 using System.IO;
 
@@ -166,25 +167,30 @@ namespace ExcelMoveData
                         System.Console.WriteLine("New character:" + ch);*/
 
             var row1 = 14;
-            for (char column = 'A'; column < 'Z'; column++)
+            double value = Math.Round(1, 1);
+            for (char column = 'A'; column < 'Z';)
             {
                 for (var row = 2; row < 100; row++)
                 {
                     //var text = worksheet1.Cells[$"A{row1}"].Value.ToString();
-                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
+                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()) || worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
                     {
                         System.Console.WriteLine("New character:" + column);
-                        System.Console.WriteLine(row);
+                        System.Console.WriteLine(row1);
                         //package.SaveAs(file);
+                        row1++;
+                        value = value + 0.1;
+                        System.Console.WriteLine(value);
                     }
                     else
                     {
-                        System.Console.WriteLine(worksheet1.Cells[$"A{row1}"].Value.ToString());
-                        System.Console.WriteLine(column);
                         System.Console.WriteLine("Error");
-                        break;
+                        column++;
+                        value = 1;
+                        System.Console.WriteLine(value);
                     }
                 }
+                break;
             }
         }
     }
