@@ -168,13 +168,22 @@ namespace ExcelMoveData
 
             var row1 = 14;
             double value = 1;
-            for (char column = 'A'; column < 'Z';)
+            for (char column = 'A'; column < 'F';)
             {
                 for (var row = 2; row < 50; row++)
                 {
                     //var text = worksheet1.Cells[$"A{row1}"].Value.ToString();
-                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
+                    if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()) && (worksheet1.Cells[$"A{row1}"].Value.ToString() != ""))
                     {
+                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                        worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                        worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
                         System.Console.WriteLine("New character:" + column);
                         System.Console.WriteLine(row1);
                         //package.SaveAs(file);
@@ -182,8 +191,17 @@ namespace ExcelMoveData
                         //value = Math.Round(value, 1) + 0.1;
                         System.Console.WriteLine(value);
                     }
-                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
+                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()) && (worksheet1.Cells[$"A{row1}"].Value.ToString() != ""))
                     {
+                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                        worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                        worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
                         System.Console.WriteLine("New character:" + column);
                         System.Console.WriteLine(row1);
                         //package.SaveAs(file);
@@ -192,9 +210,10 @@ namespace ExcelMoveData
                         value = Math.Round(value, 1);
                         System.Console.WriteLine(value);
                     }
-                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(null))
+                    else if (worksheet1.Cells[$"A{row1}"].Value.ToString() == null)
                     {
                         break;
+                        //package.SaveAs(file);
                     }
                     else
                     {
@@ -206,11 +225,13 @@ namespace ExcelMoveData
                         //System.Console.WriteLine(value);
                     }
                 }
-                if (worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(null))
+                if (worksheet1.Cells[$"A{row1}"].Value.ToString() == null)
                 {
                     break;
+                    //package.SaveAs(file);
                 }
             }
+            package.SaveAs(file);
         }
     }
 }
