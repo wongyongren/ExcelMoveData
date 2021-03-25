@@ -26,7 +26,7 @@ namespace ExcelMoveData
             using var package1 = new ExcelPackage(file1);
 
             // Create worksheets
-            package.Workbook.Worksheets.Add("WWT ELCP");
+            //package.Workbook.Worksheets.Add("WWT ELCP");
             var worksheet = package.Workbook.Worksheets["WWT ELCP"];
             //head
             worksheet.Cells["A1"].Value = "PhaseType";
@@ -75,14 +75,15 @@ namespace ExcelMoveData
                         worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
                         worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
                         worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                        System.Console.WriteLine("New character:" + column);
-                        System.Console.WriteLine(row1);
+                        //System.Console.WriteLine("New character:" + column);
+                        //System.Console.WriteLine(row1);
                         row1++;
-                        System.Console.WriteLine(value);
+                        //System.Console.WriteLine(value);
                     }
                     else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
                     {
                         worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet.Cells[$"B{row}"].Value = $"{column} " + worksheet.Cells[$"B{row}"].Value;
                         worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
                         worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
                         worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
@@ -91,12 +92,13 @@ namespace ExcelMoveData
                         worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
                         worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
                         worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                        System.Console.WriteLine("New character:" + column);
-                        System.Console.WriteLine(row1);
+                        //System.Console.WriteLine(worksheet.Cells[$"B{row}"].Value);
+                        //System.Console.WriteLine("New character:" + column);
+                        //System.Console.WriteLine(row1);
                         row1++;
                         value = Math.Round(value, 1) + 0.1;
                         value = Math.Round(value, 1);
-                        System.Console.WriteLine(value);
+                        //System.Console.WriteLine(value);
                     }
                     else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() == "")
                     {
@@ -114,8 +116,9 @@ namespace ExcelMoveData
                 }
             }
 
-            for (var row = 4; row < 58; row++)
+            for (var row = 2; row < 58; row++)
             {
+                worksheet.Cells[$"B{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 worksheet.Cells[$"E{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 worksheet.Cells[$"F{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 worksheet.Cells[$"G{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -130,6 +133,9 @@ namespace ExcelMoveData
             }
             worksheet.Column(4).Width = 60;
             worksheet.Column(3).Width = 11;
+            worksheet.Cells.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            worksheet.Cells.Style.Fill.BackgroundColor.SetColor(Color.White);
+            worksheet.View.FreezePanes(2, 1);
             package.SaveAs(file);
         }
 
