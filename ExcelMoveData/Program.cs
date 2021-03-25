@@ -11,10 +11,7 @@ namespace ExcelMoveData
         private static void Main(string[] args)
         {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
             CreateHead();
-            //CopyData();
-            //DynamicCopyData();
             TestData();
         }
 
@@ -24,11 +21,9 @@ namespace ExcelMoveData
             var file1 = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\8T WWT ELCP Panel Quotation @ 8T Fish Farm.xlsx");
             using var package = new ExcelPackage(file);
             using var package1 = new ExcelPackage(file1);
-
             // Create worksheets
             //package.Workbook.Worksheets.Add("WWT ELCP");
             var worksheet = package.Workbook.Worksheets["WWT ELCP"];
-            //head
             worksheet.Cells["A1"].Value = "PhaseType";
             worksheet.Cells["B1"].Value = "Item";
             worksheet.Cells["C1"].Value = "Description";
@@ -43,7 +38,6 @@ namespace ExcelMoveData
             worksheet.Cells["L1"].Value = "CstStkQty";
             worksheet.Cells["M1"].Value = "CstStockUnitRate";
             worksheet.Cells["N1"].Value = "CostAmount";
-
             var range = worksheet.Cells["A1:N1"];
             range.AutoFitColumns();
             package.SaveAs(file);
@@ -60,63 +54,54 @@ namespace ExcelMoveData
 
             var row1 = 14;
             double value = 1;
-            for (char column = 'A'; column < 'F';)
+            char column = 'A';
+
+            for (var row = 2; row < 100; row++)
             {
-                for (var row = 2; row < 50; row++)
+                if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
                 {
-                    if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(column.ToString()))
-                    {
-                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
-                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                        worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                        worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                        //System.Console.WriteLine("New character:" + column);
-                        //System.Console.WriteLine(row1);
-                        row1++;
-                        //System.Console.WriteLine(value);
-                    }
-                    else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
-                    {
-                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
-                        worksheet.Cells[$"B{row}"].Value = $"{column} " + worksheet.Cells[$"B{row}"].Value;
-                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                        worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                        worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                        //System.Console.WriteLine(worksheet.Cells[$"B{row}"].Value);
-                        //System.Console.WriteLine("New character:" + column);
-                        //System.Console.WriteLine(row1);
-                        row1++;
-                        value = Math.Round(value, 1) + 0.1;
-                        value = Math.Round(value, 1);
-                        //System.Console.WriteLine(value);
-                    }
-                    else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() == "")
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        column++;
-                        value = 1;
-                    }
+                    worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                    worksheet.Cells[$"A{row}"].Value = "M";
+                    worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
+                    row1++;
                 }
-                if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() == "")
+                else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
+                {
+                    worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                    worksheet.Cells[$"A{row}"].Value = "S";
+                    worksheet.Cells[$"B{row}"].Value = $"{column}." + worksheet.Cells[$"B{row}"].Value;
+                    worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
+                    row1++;
+                    value = Math.Round(value, 1) + 0.1;
+                    value = Math.Round(value, 1);
+                }
+                else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() == "" || column == 'C')
                 {
                     break;
                 }
+                else
+                {
+                    ++column;
+                    System.Console.WriteLine(column);
+                    value = 1;
+                }
             }
 
-            for (var row = 2; row < 58; row++)
+            for (var row = 2; row < 100; row++)
             {
                 worksheet.Cells[$"B{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 worksheet.Cells[$"E{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -135,107 +120,8 @@ namespace ExcelMoveData
             worksheet.Column(3).Width = 11;
             worksheet.Cells.Style.Fill.PatternType = ExcelFillStyle.Solid;
             worksheet.Cells.Style.Fill.BackgroundColor.SetColor(Color.White);
+            worksheet.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Top;
             worksheet.View.FreezePanes(2, 1);
-            package.SaveAs(file);
-        }
-
-        private static void CopyData()
-        {
-            var file = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\CopyExcel.xlsx");
-            var file1 = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\8T WWT ELCP Panel Quotation @ 8T Fish Farm.xlsx");
-            using var package = new ExcelPackage(file);
-            using var package1 = new ExcelPackage(file1);
-            var worksheet = package.Workbook.Worksheets["WWT ELCP"];
-            var worksheet1 = package1.Workbook.Worksheets["WWT ELCP"];
-
-            // headers
-
-            worksheet.Cells["B2"].Value = "A";
-            var row1 = 14;
-            for (var row = 3; row < 58; row++)
-            {
-                worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                worksheet.Column(row).AutoFit();
-                row1++;
-            }
-            worksheet.Column(4).Width = 60;
-            worksheet.Column(3).Width = 13;
-
-            for (var row = 5; row < 58; row++)
-            {
-                worksheet.Cells[$"E{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"F{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"G{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"H{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"M{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"N{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            }
-            for (var i = 9; i < 15; i++)
-            {
-                worksheet.Column(i).Style.Font.Color.SetColor(Color.Red);
-                worksheet1.Column(i).Style.Numberformat.Format = "General";
-            }
-
-            package1.SaveAs(file1);
-            package.SaveAs(file);
-        }
-
-        private static void DynamicCopyData()
-        {
-            var file = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\CopyExcel.xlsx");
-            var file1 = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\8T WWT ELCP Panel Quotation @ 8T Fish Farm.xlsx");
-            using var package = new ExcelPackage(file);
-            using var package1 = new ExcelPackage(file1);
-            var worksheet = package.Workbook.Worksheets["WWT ELCP"];
-            var worksheet1 = package1.Workbook.Worksheets["WWT ELCP"];
-
-            var row1 = 14;
-
-            for (var row = 2; row < 100; row++)
-            {
-                if ((worksheet1.Cells[$"B{row1}"].Value ?? "").ToString() != "" || (worksheet1.Cells[$"C{row1}"].Value ?? "").ToString() != "")
-                {
-                    worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
-                    worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                    worksheet.Column(row).AutoFit();
-                    row1++;
-                    package.SaveAs(file);
-                }
-                else
-                {
-                    break;
-                }
-            }
-            for (var row = 4; row < 58; row++)
-            {
-                worksheet.Cells[$"E{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"F{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"G{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"H{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"M{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[$"N{row}"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            }
-            for (var i = 9; i < 15; i++)
-            {
-                worksheet.Column(i).Style.Font.Color.SetColor(Color.Red);
-                worksheet.Column(i).Style.Numberformat.Format = "General";
-            }
-            worksheet.Column(4).Width = 60;
-            worksheet.Column(3).Width = 13;
             package.SaveAs(file);
         }
     }
