@@ -22,7 +22,7 @@ namespace ExcelMoveData
             using var package = new ExcelPackage(file);
             using var package1 = new ExcelPackage(file1);
             // Create worksheets
-            //package.Workbook.Worksheets.Add("WWT ELCP");
+            package.Workbook.Worksheets.Add("WWT ELCP");
             var worksheet = package.Workbook.Worksheets["WWT ELCP"];
 
             //Create Header
@@ -48,7 +48,7 @@ namespace ExcelMoveData
 
         private static void TestData()
         {
-            //Create and Link the New File
+            //Create and Link the New File ( put file in Documents\Excel)
             var file = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\CopyExcel.xlsx");
             //The Original File
             var file1 = new FileInfo(fileName: @"C:\Users\user\Documents\Excel\8T WWT ELCP Panel Quotation @ 8T Fish Farm.xlsx");
@@ -73,34 +73,77 @@ namespace ExcelMoveData
                     worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
                     worksheet.Cells[$"A{row}"].Value = "M";
                     worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
+                    //worksheet.Cells[$"N{row}"].Value = $"=SUM(L{row}*M{row})";
                     //row1 is using for original file because both row is different row
                     row1++;
                 }
                 // if original file column get value of 1 ,1.1
-                else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()))
+                else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()) && (worksheet1.Cells[$"H{row1}"].Value ?? "").ToString() != "0")
                 {
-                    worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
-                    worksheet.Cells[$"A{row}"].Value = "S";
-                    worksheet.Cells[$"B{row}"].Value = $"{column}." + worksheet.Cells[$"B{row}"].Value;
-                    worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
-                    worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
-                    worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
-                    worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
-                    worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
-                    worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
-                    worksheet1.Cells[$"J{row1}"].Copy(worksheet.Cells[$"M{row}"]);
-                    worksheet1.Cells[$"K{row1}"].Copy(worksheet.Cells[$"N{row}"]);
-                    row1++;
-                    //do addition to get 1.1,1.2
-                    value = Math.Round(value, 1) + 0.1;
-                    value = Math.Round(value, 1);
+                    if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "0")
+                    {
+                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet.Cells[$"A{row}"].Value = "S";
+                        worksheet.Cells[$"B{row}"].Value = $"{column}." + worksheet.Cells[$"B{row}"].Value;
+                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                        worksheet.Cells[$"I{row}"].Value = "Elec";
+                        worksheet.Cells[$"K{row}"].Value = "Elec";
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"L{row}"]);
+                        worksheet1.Cells[$"H{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                        worksheet.Cells[$"N{row}"].Formula = $"=SUM(L{row}*M{row})";
+                        row++;
+                        worksheet.Cells[$"I{row}"].Value = "Labour";
+                        worksheet.Cells[$"K{row}"].Value = "Labour";
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"L{row}"]);
+                        worksheet1.Cells[$"I{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                        worksheet.Cells[$"N{row}"].Formula = $"=SUM(L{row}*M{row})";
+                        row1++;
+                        //do addition to get 1.1,1.2
+                        value = Math.Round(value, 1) + 0.1;
+                        value = Math.Round(value, 1);
+                    }
+                    else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "")
+                    {
+                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet.Cells[$"A{row}"].Value = "S";
+                        worksheet.Cells[$"B{row}"].Value = $"{column}." + worksheet.Cells[$"B{row}"].Value;
+                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                        worksheet.Cells[$"I{row}"].Value = "Elec";
+                        worksheet.Cells[$"K{row}"].Value = "Elec";
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"L{row}"]);
+                        worksheet1.Cells[$"H{row1}"].Copy(worksheet.Cells[$"M{row}"]);
+                        worksheet.Cells[$"N{row}"].Formula = $"=SUM(L{row}*M{row})";
+                        row1++;
+                        //do addition to get 1.1,1.2
+                        value = Math.Round(value, 1) + 0.1;
+                        value = Math.Round(value, 1);
+                    }
+                    else
+                    {
+                        worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
+                        worksheet.Cells[$"A{row}"].Value = "S";
+                        worksheet.Cells[$"B{row}"].Value = $"{column}." + worksheet.Cells[$"B{row}"].Value;
+                        worksheet1.Cells[$"B{row1}"].Copy(worksheet.Cells[$"C{row}"]);
+                        worksheet1.Cells[$"C{row1}"].Copy(worksheet.Cells[$"D{row}"]);
+                        worksheet1.Cells[$"D{row1}"].Copy(worksheet.Cells[$"E{row}"]);
+                        worksheet1.Cells[$"E{row1}"].Copy(worksheet.Cells[$"F{row}"]);
+                        worksheet1.Cells[$"F{row1}"].Copy(worksheet.Cells[$"G{row}"]);
+                        worksheet1.Cells[$"G{row1}"].Copy(worksheet.Cells[$"H{row}"]);
+                        row1++;
+                        //do addition to get 1.1,1.2
+                        value = Math.Round(value, 1) + 0.1;
+                        value = Math.Round(value, 1);
+                    }
                 }
                 //if original file get null value or column equal to setting column,it will break and stop the for loop
                 else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() == "" || column == 'E')
