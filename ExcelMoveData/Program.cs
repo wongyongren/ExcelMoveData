@@ -80,7 +80,7 @@ namespace ExcelMoveData
                 // if original file column get value of 1 ,1.1
                 else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && worksheet1.Cells[$"A{row1}"].Value.ToString().Equals(value.ToString()) && (worksheet1.Cells[$"H{row1}"].Value ?? "").ToString() != "0")
                 {
-                    if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "0")
+                    if ((worksheet1.Cells[$"H{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "0")
                     {
                         worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
                         worksheet.Cells[$"A{row}"].Value = "S";
@@ -107,7 +107,7 @@ namespace ExcelMoveData
                         value = Math.Round(value, 1) + 0.1;
                         value = Math.Round(value, 1);
                     }
-                    else if ((worksheet1.Cells[$"A{row1}"].Value ?? "").ToString() != "" && (worksheet1.Cells[$"I{row1}"].Value ?? "").ToString() != "")
+                    else if ((worksheet1.Cells[$"H{row1}"].Value ?? "").ToString() != "")
                     {
                         worksheet1.Cells[$"A{row1}"].Copy(worksheet.Cells[$"B{row}"]);
                         worksheet.Cells[$"A{row}"].Value = "S";
